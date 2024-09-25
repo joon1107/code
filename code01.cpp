@@ -4,50 +4,45 @@
 
 using namespace std;
 
-
-
 int main() {
 	cin.sync_with_stdio(false);
 	cin.tie(0);
-	
-	int K, N;
-	long long start = 1, end, mid, sum = 0, lan_max = -1;
 
-	int v[10000];
+	long long N, M; // 나무의 수 N, 집으로 가져가려하는 나무의 길이 M
+	int tree_max = -1; // 가장 큰 나무의 길이
+	int mymax = -1; //절단기의 최대값;
+	int start = 0, end, mid;
+	long long total;
+	int v[1000000];
 
-	cin >> K >> N;
+	cin >> N >> M;
 
-	for (int i = 0; i < K; i++) {
+	for (int i = 0; i < N; i++) {
 		cin >> v[i];
-		sum += v[i];
+		tree_max = max(v[i], tree_max);
 	}
 
-	end = sum / K;
+	cout << tree_max;
 
-	
+	 end = tree_max;
 
-	while (start <= end) {
-		int total = 0;
+	while (end >= start) {
+		total = 0;
 		mid = (start + end) / 2;
-
-		for (int i = 0; i < K; i++) {
-			total += v[i] / mid;
-		}
 		
-		if (total >= N) {
-			start = mid + 1;
-			lan_max = max(lan_max, mid);
+		for (int i = 0; i < N; i++) {
+			if (v[i] > mid) {
+				total += v[i] - mid;
+			}
 		}
 
+		if (total >= M) {
+			start = mid + 1;
+			mymax = mid
+		}
 		else
 			end = mid - 1;
 	}
- 
-	cout << lan_max;
 
-	}
-
-
-
-	
-
+	cout << mymax;
+}
